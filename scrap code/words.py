@@ -1,6 +1,6 @@
 import csv
 
-with open('Victoria_BC_Police_Department_Data_date.csv','rb') as fr:
+with open('Victoria_BC_Police_Department_Data_new.csv','rb') as fr:
 	reader = csv.reader(fr)
 	testlist = list(reader)
 
@@ -14,6 +14,7 @@ parent_whole = {}
 
 parent_child = {}
 
+complete_list = {}
 other = {}
 other_count = 0
 listcount = 0
@@ -45,6 +46,14 @@ for i in range(len(testlist)):
 	else:
 		parent_whole[temp_parent_whole] += 1
 	
+	parentchild = temp_parent_whole + "//" + temp_child_whole
+	check_parentchild = complete_list.get(parentchild)
+	if check_parentchild is None:
+		complete_list[parentchild] = 1
+	else:
+		complete_list[parentchild] += 1
+	
+	'''
 	if (temp_parent_whole == "Other"):
 		parentchild = temp_parent_whole + "//" + temp_child_whole
 		other_count += 1
@@ -54,6 +63,8 @@ for i in range(len(testlist)):
 			other[parentchild] = 1
 		else:
 			other[parentchild] += 1
+	'''
+	
 
 #----- WORD SECTION -----		
 	for j in range(len(testlist[i][1].split())):
@@ -74,9 +85,12 @@ for i in range(len(testlist)):
 		else:
 			parent_word[temp_parent_word] += 1
 
-print other
-print other_count
-print listcount
+print len(complete_list)
+
+#print other
+#print other_count
+#print listcount
+
 '''			
 new_parent_file = open("parent_crime.txt", "w")
 new_parent_file.write("Parent Whole\n")
@@ -100,45 +114,7 @@ for i in range(len(child_word)):
 new_child_file.close()
 '''
 
-'''			
-temp_str = "hi" + ':' + "there"
-
-print temp_str
-'''
-
-'''
-print 'parent word'
-print sorted(parent_word.values())
-print sorted(parent_word, key = parent_word.get)
-print ''
-
-print 'parent whole'
-print sorted(parent_whole.values())
-print sorted(parent_whole, key = parent_whole.get)
-
-print ''
-
-print 'child word'
-print sorted(child_word.values())
-print sorted(child_word, key = child_word.get)
-
-print ''
-
-print 'child whole'
-print sorted(child_whole.values())
-print sorted(child_whole, key = child_whole.get)
-'''
-
-'''
-print 'Printing Child Whole Dictionary'			
-print child_whole
-print ''
-print 'parent whole'
-print parent_whole
-print ''
-print 'child word'
-print child_word
-print ''
-print 'parent word'
-print parent_word
-'''
+parentchild = open("parentchild.txt","w")
+parentchild.write("Parent Child Combinations\n")
+for i in range(len(complete_list)):
+	parentchild.write(sorted(complete_list, key = complete_list.get)[i] + ": " + str(sorted(complete_list.values())[i]) + "\n")
