@@ -12,7 +12,7 @@ import numpy as np
 #	iris.data, iris.target, test_size=0.4, random_state=0)
 
 dataList = []
-with open('Victoria_BC_Police_Department_Data_1000_items.csv','rU') as csv_file:
+with open('Victoria_BC_Police_Department_Data_class_numbered.csv','rU') as csv_file:
 	reader = csv.reader(csv_file, delimiter=',')
 	for row in reader:
 		dataList.append(row)
